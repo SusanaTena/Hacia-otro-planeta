@@ -1,2 +1,2 @@
 # Hacia-otro-planeta
-Creamos juego con nave en el espacio
+Creamos un juego en el que nuestra nave debe llegar a otro planeta esquivando los meteoritos
