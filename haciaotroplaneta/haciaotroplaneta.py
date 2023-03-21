@@ -15,7 +15,7 @@ class HaciaOtroPlaneta:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     salir = True
-            self.pantalla.fill((10, 20, 30))
+            self.pantalla.fill((25, 80, 99))
             pygame.display.flip()
 
 
