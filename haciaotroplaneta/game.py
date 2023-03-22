@@ -1,5 +1,6 @@
 import pygame
 from haciaotroplaneta import ALTO, ANCHO
+from haciaotroplaneta.escenas import Portada, Partdida, MejoresJugadores
 
 
 class HaciaOtroPlaneta:
@@ -7,14 +8,15 @@ class HaciaOtroPlaneta:
         pygame.init()
         self.pantalla = pygame.display.set_mode((ANCHO, ALTO))
 
+        self.escenas = [
+            Portada (self.pantalla),
+            Partdida (self.pantalla),
+            MejoresJugadores (self.pantalla)
+        ]
+
     def comienzo(self):
-        salir = False
-        while not salir:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    salir = True
-            self.pantalla.fill((25, 80, 99))
-            pygame.display.flip()
+        for escena in self.escenas:
+            escena.bucle_principal()
 
 
 
