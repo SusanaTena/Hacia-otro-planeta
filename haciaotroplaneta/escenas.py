@@ -14,7 +14,7 @@ class Escena:
 class Portada(Escena):
     def __init__(self, pantalla):
         super().__init__(pantalla)
-        ruta = os.path.join("resources", "images", "titulo.jpg")
+        ruta = os.path.join("resources", "images", "portada.jpg")
         self.logo = pygame.image.load(ruta)
 
     def bucle_principal(self):
