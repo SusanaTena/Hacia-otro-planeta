@@ -1,12 +1,13 @@
 import pygame
-from haciaotroplaneta import ALTO, ANCHO
-from haciaotroplaneta.escenas import Portada, Partdida, MejoresJugadores
+from . import ALTO, ANCHO
+from .escenas import Portada, Partdida, MejoresJugadores
 
 
 class HaciaOtroPlaneta:
     def __init__(self):
         pygame.init()
         self.pantalla = pygame.display.set_mode((ANCHO, ALTO))
+        pygame.display.set_caption("Hacia otro Planeta")
 
         self.escenas = [
             Portada (self.pantalla),
