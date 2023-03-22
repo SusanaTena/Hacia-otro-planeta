@@ -53,6 +53,11 @@ class Portada(Escena):
 
 
 class Partdida(Escena):
+    def __init__(self, pantalla):
+        super().__init__(pantalla)
+        ruta = os.path.join("resources", "images", "saturn.jpg")
+        self.fondo = pygame.image.load(ruta)
+
     def bucle_principal(self):
         super().bucle_principal()
         return False
@@ -60,9 +65,15 @@ class Partdida(Escena):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     salir = True
-            self.pantalla.fill((0, 25, 0))
+            self.pintar_fondo()
             pygame.display.flip()
         return False
+
+    def pintar_fondo(self):
+        self.pantalla.fill((25, 120, 200))
+        # pintar la imagen de fondo en la pantalla
+        self.pantalla.blit(self.fondo, (0, 0))
+        self.pantalla.blit(self.fondo, (600, 0))
 
 
 class MejoresJugadores(Escena):
