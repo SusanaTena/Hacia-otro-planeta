@@ -10,14 +10,15 @@ class HaciaOtroPlaneta:
         pygame.display.set_caption("Hacia otro Planeta")
 
         self.escenas = [
-            Portada (self.pantalla),
-            Partdida (self.pantalla),
-            MejoresJugadores (self.pantalla)
+            Portada(self.pantalla),
+            Partdida(self.pantalla),
+            MejoresJugadores(self.pantalla)
         ]
 
     def comienzo(self):
         for escena in self.escenas:
-            escena.bucle_principal()
-
-
-
+            he_acabado = escena.bucle_principal()
+            if he_acabado:
+                break
+        print("He acabado el for")
+        pygame.quit()

@@ -14,8 +14,13 @@ class Escena:
 class Portada(Escena):
     def __init__(self, pantalla):
         super().__init__(pantalla)
+
         ruta = os.path.join("resources", "images", "portada.jpg")
         self.logo = pygame.image.load(ruta)
+
+        ruta_fuente = os.path.join(
+            "resources", "fonts", "CabinSketch-Bold.ttf")
+        self.tipografia = pygame.font.Font(ruta_fuente, 35)
 
     def bucle_principal(self):
         super().bucle_principal()
@@ -23,10 +28,15 @@ class Portada(Escena):
         while not salir:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    return True
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_KP_ENTER:
                     salir = True
+
             self.pantalla.fill((25, 80, 99))
             self.pintar_logo()
+            self.pintar_texto()
             pygame.display.flip()
+        return False
 
     def pintar_logo(self):
         ancho_logo = self.logo.get_width()
@@ -34,17 +44,25 @@ class Portada(Escena):
         pos_y = ALTO/20
         self.pantalla.blit(self.logo, (pos_x, pos_y))
 
+    def pintar_texto(self):
+        mensaje = "Pulsa Enter para comenzar la partida"
+        texto = self.tipografia.render(mensaje, True, (0, 0, 0))
+        pos_x = ANCHO/2 - texto.get_width()/2
+        pos_y = ALTO/4
+        self.pantalla.blit(texto, (pos_x, pos_y))
+
 
 class Partdida(Escena):
     def bucle_principal(self):
         super().bucle_principal()
-        salir = False
+        return False
         while not salir:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     salir = True
             self.pantalla.fill((0, 25, 0))
             pygame.display.flip()
+        return False
 
 
 class MejoresJugadores(Escena):
@@ -54,6 +72,7 @@ class MejoresJugadores(Escena):
         while not salir:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    salir = True
+                    return True
             self.pantalla.fill((30, 50, 70))
             pygame.display.flip()
+        return False
