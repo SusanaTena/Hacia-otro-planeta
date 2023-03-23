@@ -1,2 +1,3 @@
-ANCHO = 1200
+ANCHO = 1000
 ALTO = 700
+
