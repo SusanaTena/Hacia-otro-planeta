@@ -1,11 +1,13 @@
 import os
-import pygame as pygame
-from . import ALTO, ANCHO
+import pygame as pg
+from .entidades import Nave
+from . import ALTO, ANCHO, FPS
 
 
 class Escena:
     def __init__(self, pantalla):
         self.pantalla = pantalla
+        self.reloj = pg.time.Clock()
 
     def bucle_principal(self):
         pass
@@ -16,26 +18,26 @@ class Portada(Escena):
         super().__init__(pantalla)
 
         ruta = os.path.join("resources", "images", "titulo.jpg")
-        self.logo = pygame.image.load(ruta)
+        self.logo = pg.image.load(ruta)
 
         ruta_fuente = os.path.join(
             "resources", "fonts", "CabinSketch-Bold.ttf")
-        self.tipografia = pygame.font.Font(ruta_fuente, 35)
+        self.tipografia = pg.font.Font(ruta_fuente, 35)
 
     def bucle_principal(self):
         super().bucle_principal()
         salir = False
         while not salir:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
                     return True
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_KP_ENTER:
+                if event.type == pg.KEYDOWN and event.key == pg.K_KP_ENTER:
                     salir = True
 
             self.pantalla.fill((25, 80, 99))
             self.pintar_logo()
             self.pintar_texto()
-            pygame.display.flip()
+            pg.display.flip()
         return False
 
     def pintar_logo(self):
@@ -56,20 +58,22 @@ class Partdida(Escena):
     def __init__(self, pantalla):
         super().__init__(pantalla)
         ruta = os.path.join("resources", "images", "sky_test_front.png")
-        self.fondo = pygame.image.load(ruta)
-        # screen = pygame.display.set_mode((1200, 700), pygame.SCALED)
-        # background = pygame.Surface(screen.get_size())
-        # background = background.convert()
+        self.fondo = pg.image.load(ruta)
+        self.jugador = Nave()
+        #self.pelota = Meteorito(self.jugador.rect.midtop)
+        #self.crear_muro()
 
     def bucle_principal(self):
         super().bucle_principal()
         salir = False
         while not salir:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+            self.reloj.tick(FPS)
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
                     return True
             self.pintar_fondo()
-            pygame.display.flip()
+            self.pantalla.blit(self.jugador.image, self.jugador.rect)
+            pg.display.flip()
         return False
 
     def pintar_fondo(self):
@@ -84,10 +88,10 @@ class MejoresJugadores(Escena):
         super().bucle_principal()
         salir = False
         while not salir:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
                     return True
             self.pantalla.fill((30, 50, 70))
             self.pantalla.blit(self.fondo(0, 0))
-            pygame.display.flip()
+            pg.display.flip()
         return False

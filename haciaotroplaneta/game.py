@@ -1,13 +1,13 @@
-import pygame
+import pygame as pg
 from . import ALTO, ANCHO
 from .escenas import Portada, Partdida, MejoresJugadores
 
 
 class HaciaOtroPlaneta:
     def __init__(self):
-        pygame.init()
-        self.pantalla = pygame.display.set_mode((ANCHO, ALTO))
-        pygame.display.set_caption("Hacia otro Planeta")
+        pg.init()
+        self.pantalla = pg.display.set_mode((ANCHO, ALTO))
+        pg.display.set_caption("Hacia otro Planeta")
 
         self.escenas = [
             Portada(self.pantalla),
@@ -21,4 +21,9 @@ class HaciaOtroPlaneta:
             if he_acabado:
                 break
         print("He acabado el for")
-        pygame.quit()
+        pg.quit()
+
+
+if __name__ == "__main__":
+    juego = HaciaOtroPlaneta()
+    juego.comienzo()
