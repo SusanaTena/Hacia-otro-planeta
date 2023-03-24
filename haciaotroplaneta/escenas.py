@@ -2,7 +2,7 @@ import os
 import pygame as pg
 from .entidades import Nave
 from . import ALTO, ANCHO, FPS
-
+from .entidades import Meteorito
 
 class Escena:
     def __init__(self, pantalla):
@@ -54,13 +54,15 @@ class Portada(Escena):
         self.pantalla.blit(texto, (pos_x, pos_y))
 
 
-class Partdida(Escena):
+class Partida(Escena):
     def __init__(self, pantalla):
         super().__init__(pantalla)
         ruta = os.path.join("resources", "images", "sky_test_front.png")
         self.fondo = pg.image.load(ruta)
         self.jugador = Nave()
-        #self.pelota = Meteorito(self.jugador.rect.midtop)
+        self.meteorito1 = Meteorito((ANCHO/2, ALTO/2), -7)
+        self.meteorito2 = Meteorito((ANCHO/2, ALTO/2.7), -5)
+        self.meteorito3 = Meteorito((ANCHO/2, ALTO/1.7), -3)
         #self.crear_muro()
 
     def bucle_principal(self):
@@ -72,7 +74,14 @@ class Partdida(Escena):
                 if event.type == pg.QUIT:
                     return True
             self.pintar_fondo()
+            self.jugador.update()
             self.pantalla.blit(self.jugador.image, self.jugador.rect)
+            self.meteorito1.update()
+            self.meteorito2.update()
+            self.meteorito3.update()
+            self.pantalla.blit(self.meteorito1.image, self.meteorito1.rect)
+            self.pantalla.blit(self.meteorito2.image, self.meteorito2.rect)
+            self.pantalla.blit(self.meteorito3.image, self.meteorito3.rect)
             pg.display.flip()
         return False
 
