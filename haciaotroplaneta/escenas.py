@@ -1,5 +1,6 @@
 import os
 import pygame as pg
+from random import *
 from .entidades import Nave
 from . import ALTO, ANCHO, FPS
 from .entidades import Meteorito
@@ -60,9 +61,12 @@ class Partida(Escena):
         ruta = os.path.join("resources", "images", "sky_test_front.png")
         self.fondo = pg.image.load(ruta)
         self.jugador = Nave()
-        self.meteorito1 = Meteorito((ANCHO/2, ALTO/2), -7)
-        self.meteorito2 = Meteorito((ANCHO/2, ALTO/2.7), -5)
-        self.meteorito3 = Meteorito((ANCHO/2, ALTO/1.7), -3)
+        self.num_meteoritos = 1000
+
+        self.meteoritos = pg.sprite.Group()
+
+        self.crear_meteoritos()
+
         #self.crear_muro()
 
     def bucle_principal(self):
@@ -76,12 +80,11 @@ class Partida(Escena):
             self.pintar_fondo()
             self.jugador.update()
             self.pantalla.blit(self.jugador.image, self.jugador.rect)
-            self.meteorito1.update()
-            self.meteorito2.update()
-            self.meteorito3.update()
-            self.pantalla.blit(self.meteorito1.image, self.meteorito1.rect)
-            self.pantalla.blit(self.meteorito2.image, self.meteorito2.rect)
-            self.pantalla.blit(self.meteorito3.image, self.meteorito3.rect)
+
+            for meteorito in self.meteoritos.sprites():
+                meteorito.update()
+                self.pantalla.blit(meteorito.image, meteorito.rect)
+
             pg.display.flip()
         return False
 
@@ -90,6 +93,18 @@ class Partida(Escena):
         # pintar la imagen de fondo en la pantalla
         self.pantalla.blit(self.fondo, (0, 0))
         self.pantalla.blit(self.fondo, (1200, 0))
+    
+    def crear_meteoritos(self):
+        
+        margen_derecho = +100        
+
+        for i in range(self.num_meteoritos):
+            meteorito = Meteorito((ANCHO + randint(0, 500000), randint(1, ALTO)), -7)
+            self.meteoritos.add(meteorito)
+
+
+
+
 
 
 class MejoresJugadores(Escena):
