@@ -5,6 +5,7 @@ from .entidades import Nave
 from . import ALTO, ANCHO, FPS
 from .entidades import Meteorito
 
+
 class Escena:
     def __init__(self, pantalla):
         self.pantalla = pantalla
@@ -13,6 +14,18 @@ class Escena:
     def bucle_principal(self):
         pass
 
+
+class Marcador:
+
+        def __init__(self, centro_h, color):
+            self.letra_marcador = pg.font.SysFont("arial", 100)
+            self.color = color
+            self.centro_h = pg.display.get_surface().get_width() / 2
+
+        texto_uno = pg.font.SysFont("comic", 32)
+        texto_dos = pg.font.SysFont("arial black", 50)
+
+        texto = texto_uno.render("SCORE = ")
 
 class Portada(Escena):
     def __init__(self, pantalla):
@@ -67,11 +80,12 @@ class Partida(Escena):
 
         self.crear_meteoritos()
 
-        #self.crear_muro()
+        # self.crear_muro()
 
     def bucle_principal(self):
         super().bucle_principal()
         salir = False
+        partida_iniciada = False
         while not salir:
             self.reloj.tick(FPS)
             for event in pg.event.get():
@@ -80,6 +94,17 @@ class Partida(Escena):
             self.pintar_fondo()
             self.jugador.update()
             self.pantalla.blit(self.jugador.image, self.jugador.rect)
+            self.jugador.hay_colision(self.jugador)
+
+            golpeados = pg.sprite.spritecollide(
+                self.jugador, self.meteoritos, True)
+
+            if len(golpeados) > 0:
+                self.jugador.velocidad_x = self.jugador.velocidad_x
+
+            # sumar la puntuación de todos los meteoritos esquivados
+
+            self.meteoritos.draw(self.pantalla)
 
             for meteorito in self.meteoritos.sprites():
                 meteorito.update()
@@ -91,20 +116,17 @@ class Partida(Escena):
     def pintar_fondo(self):
         self.pantalla.fill((25, 120, 200))
         # pintar la imagen de fondo en la pantalla
-        self.pantalla.blit(self.fondo, (0, 0))
         self.pantalla.blit(self.fondo, (1200, 0))
-    
+
     def crear_meteoritos(self):
-        
-        margen_derecho = +100        
+
+        margen_derecho = +100
 
         for i in range(self.num_meteoritos):
-            meteorito = Meteorito((ANCHO + randint(0, 500000), randint(1, ALTO)), -7)
+            # randint devuelve un valor aleatorio entre el primer y el segundo entero
+            meteorito = Meteorito(
+                (ANCHO + randint(0, 100000), randint(1, ALTO)), -7)
             self.meteoritos.add(meteorito)
-
-
-
-
 
 
 class MejoresJugadores(Escena):

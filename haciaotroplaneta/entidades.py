@@ -40,9 +40,8 @@ class Nave(Sprite):
             if self.rect.height < 0:
                 self.rect.height = 0
 
-class Meteorito(Sprite):
 
-    
+class Meteorito(Sprite):
 
     def __init__(self, posicion, velocidad):
         super().__init__()
@@ -59,7 +58,22 @@ class Meteorito(Sprite):
         # en movimiento
         self.rect.x += self.velocidad_x
 
-        #self.rect.x += self.velocidad_x
+        # self.rect.x += self.velocidad_x
         # llegar a la parte izquierda
         if self.rect.width <= 0:
             self.velocidad_x = -self.velocidad_x
+
+    def pierdes(self):
+        print("Has perdido una vida")
+
+    def reset(self):
+        print("Volvemos a poner la pelota en la posición inicial")
+
+    def hay_colision(self, otro):
+        if self.rect.colliderect(otro):
+            # hay_colision
+            self.velocidad_x = -self.velocidad_x
+        self.image = pg.image.load(
+            os.path.join("resources", "images", "")
+        )
+        
