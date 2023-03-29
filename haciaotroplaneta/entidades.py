@@ -4,6 +4,7 @@ from pygame.sprite import Sprite
 from haciaotroplaneta import ALTO, ANCHO, FPS
 
 
+
 class Nave(Sprite):
 
     margen_izquierdo = 120

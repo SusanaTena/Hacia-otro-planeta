@@ -3,7 +3,7 @@ import pygame as pg
 from random import *
 from .entidades import Nave
 from . import ALTO, ANCHO, FPS
-from .entidades import Meteorito
+from .entidades import Meteorito, Nave
 
 
 class Escena:
