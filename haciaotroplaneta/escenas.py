@@ -5,6 +5,8 @@ from .entidades import Nave
 from . import ALTO, ANCHO, FPS
 from .entidades import Meteorito, Nave
 
+pg.font.init()
+
 
 class Escena:
     def __init__(self, pantalla):
@@ -25,7 +27,7 @@ class Marcador:
         texto_uno = pg.font.SysFont("comic", 32)
         texto_dos = pg.font.SysFont("arial black", 50)
 
-        texto = texto_uno.render("SCORE = ")
+        #texto = texto_uno.render("SCORE = ")
 
 class Portada(Escena):
     def __init__(self, pantalla):

@@ -15,6 +15,7 @@ class Nave(Sprite):
 
     def __init__(self):
         super().__init__()
+        self.velocidad_x = self.velocidad
         self.imagenes = [
             pg.image.load(
                 os.path.join("resources", "images", "nave.png")
@@ -41,6 +42,12 @@ class Nave(Sprite):
             if self.rect.height < 0:
                 self.rect.height = 0
 
+    def hay_colision(self, otro):
+        if self.rect.colliderect(otro):
+            # hay_colision
+            self.velocidad_x = -self.velocidad_x
+        self.image = pg.image.load(
+            os.path.join("resources", "images", "nave.png"))
 
 class Meteorito(Sprite):
 
@@ -75,6 +82,6 @@ class Meteorito(Sprite):
             # hay_colision
             self.velocidad_x = -self.velocidad_x
         self.image = pg.image.load(
-            os.path.join("resources", "images", "")
+            os.path.join("resources", "images", "explosion.png")
         )
         

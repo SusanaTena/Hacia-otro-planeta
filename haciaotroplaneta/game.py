@@ -1,6 +1,7 @@
 import pygame as pg
 from . import ALTO, ANCHO
 from .escenas import Portada, Partida, MejoresJugadores
+from .entidades import Nave
 
 
 class HaciaOtroPlaneta:
