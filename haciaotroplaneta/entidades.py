@@ -19,12 +19,6 @@ class Nave(Sprite):
         self.imagenes = [
             pg.image.load(
                 os.path.join("resources", "images", "nave.png")
-            ),
-            pg.image.load(
-                os.path.join("resources", "images", "nave.png")
-            ),
-            pg.image.load(
-                os.path.join("resources", "images", "airship.png")
             )]
         self.siguiente_imagen = 0
         self.image = self.imagenes[self.siguiente_imagen]
@@ -45,9 +39,8 @@ class Nave(Sprite):
     def hay_colision(self, otro):
         if self.rect.colliderect(otro):
             # hay_colision
-            self.velocidad_x = -self.velocidad_x
-        self.image = pg.image.load(
-            os.path.join("resources", "images", "nave.png"))
+            self.image = pg.image.load(
+                os.path.join("resources", "images", "explosion.png"))
 
 class Meteorito(Sprite):
 
@@ -62,11 +55,9 @@ class Meteorito(Sprite):
 
     def update(self):
 
-        # calculo de la posición de la pelota
-        # en movimiento
+        # calculo de la posición de la nave en movimiento
         self.rect.x += self.velocidad_x
 
-        # self.rect.x += self.velocidad_x
         # llegar a la parte izquierda
         if self.rect.width <= 0:
             self.velocidad_x = -self.velocidad_x
@@ -77,11 +68,16 @@ class Meteorito(Sprite):
     def reset(self):
         print("Volvemos a poner la pelota en la posición inicial")
 
-    def hay_colision(self, otro):
-        if self.rect.colliderect(otro):
-            # hay_colision
-            self.velocidad_x = -self.velocidad_x
+class Colision(Sprite):
+    def __init__(self):
+        super().__init__()
         self.image = pg.image.load(
-            os.path.join("resources", "images", "explosion.png")
-        )
+            os.path.join("resources", "images", "explosion.png"))
+        self.rect = self.image.get_rect(
+            self.jugador.rect)
+    
+        
+    
+    
+
         

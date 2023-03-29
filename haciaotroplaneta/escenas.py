@@ -3,7 +3,7 @@ import pygame as pg
 from random import *
 from .entidades import Nave
 from . import ALTO, ANCHO, FPS
-from .entidades import Meteorito, Nave
+from .entidades import Colision, Meteorito, Nave
 
 pg.font.init()
 
@@ -70,6 +70,7 @@ class Portada(Escena):
         self.pantalla.blit(texto, (pos_x, pos_y))
 
 
+
 class Partida(Escena):
     def __init__(self, pantalla):
         super().__init__(pantalla)
@@ -77,17 +78,16 @@ class Partida(Escena):
         self.fondo = pg.image.load(ruta)
         self.jugador = Nave()
         self.num_meteoritos = 1000
+        self.tiempo = 60
 
         self.meteoritos = pg.sprite.Group()
 
         self.crear_meteoritos()
 
-        # self.crear_muro()
-
     def bucle_principal(self):
         super().bucle_principal()
         salir = False
-        partida_iniciada = False
+        colision = Colision
         while not salir:
             self.reloj.tick(FPS)
             for event in pg.event.get():
@@ -96,28 +96,34 @@ class Partida(Escena):
             self.pintar_fondo()
             self.jugador.update()
             self.pantalla.blit(self.jugador.image, self.jugador.rect)
-            self.jugador.hay_colision(self.jugador)
+            #self.jugador.hay_colision(self.jugador)
 
             golpeados = pg.sprite.spritecollide(
                 self.jugador, self.meteoritos, True)
 
             if len(golpeados) > 0:
-                self.jugador.velocidad_x = self.jugador.velocidad_x
+                self.pantalla.blit(colision.image, self.jugador.rect)
+                #########pintar imagen explosion, borrar meteorito
 
-            # sumar la puntuación de todos los meteoritos esquivados
+            # sumar la puntuación de todos los Meteoritos esquivados
 
-            self.meteoritos.draw(self.pantalla)
+            if pg.time.get_ticks() < 100000:
+                for meteorito in self.meteoritos.sprites():
+                    meteorito.update()
+                    self.pantalla.blit(meteorito.image, meteorito.rect)
+            
+            self.tiempo = self.tiempo * 10
 
-            for meteorito in self.meteoritos.sprites():
-                meteorito.update()
-                self.pantalla.blit(meteorito.image, meteorito.rect)
+            print("tiempo", pg.time.get_ticks())
 
+            #añadir duracion explosion
             pg.display.flip()
         return False
 
     def pintar_fondo(self):
         self.pantalla.fill((25, 120, 200))
         # pintar la imagen de fondo en la pantalla
+        self.pantalla.blit(self.fondo, (0,0))
         self.pantalla.blit(self.fondo, (1200, 0))
 
     def crear_meteoritos(self):
