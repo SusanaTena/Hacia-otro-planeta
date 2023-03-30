@@ -1,6 +1,6 @@
 import pygame as pg
 from . import ALTO, ANCHO
-from .escenas import Portada, Partida, MejoresJugadores
+from .escenas import Portada, Partida
 from .entidades import Nave
 
 
@@ -12,8 +12,7 @@ class HaciaOtroPlaneta:
 
         self.escenas = [
             Portada(self.pantalla),
-            Partida(self.pantalla),
-            MejoresJugadores(self.pantalla)
+            Partida(self.pantalla)
         ]
 
     def comienzo(self):

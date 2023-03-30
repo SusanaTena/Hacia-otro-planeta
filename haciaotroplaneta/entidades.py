@@ -36,11 +36,6 @@ class Nave(Sprite):
             if self.rect.height < 0:
                 self.rect.height = 0
 
-    def hay_colision(self, otro):
-        if self.rect.colliderect(otro):
-            # hay_colision
-            self.image = pg.image.load(
-                os.path.join("resources", "images", "explosion.png"))
 
 class Meteorito(Sprite):
 
@@ -73,7 +68,16 @@ class Colision(Sprite):
         self.image = pg.image.load(
             os.path.join("resources", "images", "explosion.png"))
         
+
+class Planeta:
+    def __init__(self, posicion):
+        super().__init__()
+        self.image = pg.image.load(
+            os.path.join("resources", "images", "mercury.png"))
         
+        self.rect = self.image.get_rect(
+            midbottom=posicion)
+
     
     
 

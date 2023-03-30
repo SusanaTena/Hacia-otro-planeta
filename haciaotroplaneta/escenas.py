@@ -3,10 +3,10 @@ import pygame as pg
 from random import *
 from .entidades import Nave
 from . import ALTO, ANCHO, FPS
-from .entidades import Colision, Meteorito, Nave
+from .entidades import Colision, Meteorito, Nave, Planeta
 
 pg.font.init()
-
+pg.font.get_init()
 
 class Escena:
     def __init__(self, pantalla):
@@ -15,7 +15,6 @@ class Escena:
 
     def bucle_principal(self):
         pass
-
 
 class Marcador:
 
@@ -79,24 +78,32 @@ class Partida(Escena):
         self.jugador = Nave()
         self.num_meteoritos = 1000
         self.tiempo = 60
-
         self.meteoritos = pg.sprite.Group()
         self.crear_meteoritos()
-
         self.colision = Colision()
+        self.planeta = Planeta((ANCHO, ALTO/4))
 
+        
     def bucle_principal(self):
         super().bucle_principal()
         salir = False
         show_time = 20
         show_colision = False
+        num_colisiones = 0
+
+        font1 = pg.font.SysFont('freesanbold.ttf', 50)
         
         while not salir:
             self.reloj.tick(FPS)
+
+
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     return True
             self.pintar_fondo()
+
+            pg.time.get_ticks()
+
             self.jugador.update()
             self.pantalla.blit(self.jugador.image, self.jugador.rect)
             #self.jugador.hay_colision(self.jugador)
@@ -108,24 +115,31 @@ class Partida(Escena):
                 show_colision = True
                 show_time = show_time - 1
                 self.pantalla.blit(self.colision.image, self.jugador.rect)
-                #########pintar imagen explosion, borrar meteorito
+
+            self.pantalla.blit(self.planeta.image, self.planeta.rect)
             
             if show_time == 0:
+                num_colisiones = num_colisiones + 1
                 show_time = 20
                 show_colision = False
 
             # sumar la puntuación de todos los Meteoritos esquivados
+            # todos los que pasen de la y suman 10 pts
+            # vidas = 5
+            # 
+            text1 = font1.render(
+                    "Colisiones: " + str(num_colisiones), True, (0, 50, 0))
+            textRect1 = text1.get_rect()
+            textRect1.center = (ANCHO/2, 25)
 
-            if pg.time.get_ticks() < 5000:
+            self.pantalla.blit(text1, textRect1)
+
+            if pg.time.get_ticks() < 100000:
                 for meteorito in self.meteoritos.sprites():
                     meteorito.update()
                     self.pantalla.blit(meteorito.image, meteorito.rect)
-            
             self.tiempo = self.tiempo * 10
-
-            print("tiempo", pg.time.get_ticks())
-
-            #añadir duracion explosion
+            
             pg.display.flip()
         return False
 
@@ -145,16 +159,3 @@ class Partida(Escena):
                 (ANCHO + randint(0, 100000), randint(1, ALTO)), -7)
             self.meteoritos.add(meteorito)
 
-
-class MejoresJugadores(Escena):
-    def bucle_principal(self):
-        super().bucle_principal()
-        salir = False
-        while not salir:
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    return True
-            self.pantalla.fill((30, 50, 70))
-            self.pantalla.blit(self.fondo(0, 0))
-            pg.display.flip()
-        return False
