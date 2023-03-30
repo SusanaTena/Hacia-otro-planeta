@@ -76,7 +76,7 @@ class Partida(Escena):
         self.fondo = pg.image.load(ruta)
         self.jugador = Nave()
         self.num_meteoritos = 1000
-        self.tiempo = 60
+        self.tiempo_partida = 10000
         self.meteoritos = pg.sprite.Group()
         self.crear_meteoritos()
         self.colision = Colision()
@@ -118,7 +118,7 @@ class Partida(Escena):
                 self.pantalla.blit(self.colision.image, self.jugador.rect)
                 
 
-            #self.pantalla.blit(self.planeta.image, self.planeta.rect)
+            
             
             if show_time == 0:
                 num_colisiones = num_colisiones + 1
@@ -136,7 +136,7 @@ class Partida(Escena):
 
             self.pantalla.blit(textoColisiones, textoColisionesRect)
 
-            if pg.time.get_ticks() < 100000:
+            if pg.time.get_ticks() < self.tiempo_partida:
                 for meteorito in self.meteoritos.sprites():
                     meteorito.update()
                     self.pantalla.blit(meteorito.image, meteorito.rect)
@@ -152,7 +152,17 @@ class Partida(Escena):
 
             if num_vidas == 0:
                 salir = True
-            
+
+            if pg.time.get_ticks() > self.tiempo_partida:
+                self.pantalla.blit(self.planeta.image, self.planeta.rect)
+                textoFin = fuente.render ("¡¡FELICIDADES!! HAS LLEGADO AL PLANETA SIRIUS :)", True, (25,50,75))
+                textoFinRect = textoFin.get_rect()
+                textoFinRect.center = (ANCHO/2, ALTO/2)
+                self.pantalla.blit(textoFin, textoFinRect)
+                self.jugador.aterrizar()
+                self.pantalla.blit(self.jugador.image, self.jugador.rect)
+
+
             pg.display.flip()
         return False
 
