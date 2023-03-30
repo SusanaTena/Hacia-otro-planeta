@@ -54,7 +54,6 @@ class Meteorito(Sprite):
             midbottom=posicion)
 
     def update(self):
-
         # calculo de la posición de la nave en movimiento
         self.rect.x += self.velocidad_x
 
@@ -73,9 +72,7 @@ class Colision(Sprite):
         super().__init__()
         self.image = pg.image.load(
             os.path.join("resources", "images", "explosion.png"))
-        self.rect = self.image.get_rect(
-            self.jugador.rect)
-    
+        
         
     
     

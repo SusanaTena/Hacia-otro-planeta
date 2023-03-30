@@ -81,13 +81,16 @@ class Partida(Escena):
         self.tiempo = 60
 
         self.meteoritos = pg.sprite.Group()
-
         self.crear_meteoritos()
+
+        self.colision = Colision()
 
     def bucle_principal(self):
         super().bucle_principal()
         salir = False
-        colision = Colision
+        show_time = 20
+        show_colision = False
+        
         while not salir:
             self.reloj.tick(FPS)
             for event in pg.event.get():
@@ -101,13 +104,19 @@ class Partida(Escena):
             golpeados = pg.sprite.spritecollide(
                 self.jugador, self.meteoritos, True)
 
-            if len(golpeados) > 0:
-                self.pantalla.blit(colision.image, self.jugador.rect)
+            if len(golpeados) > 0 or show_colision == True:
+                show_colision = True
+                show_time = show_time - 1
+                self.pantalla.blit(self.colision.image, self.jugador.rect)
                 #########pintar imagen explosion, borrar meteorito
+            
+            if show_time == 0:
+                show_time = 20
+                show_colision = False
 
             # sumar la puntuación de todos los Meteoritos esquivados
 
-            if pg.time.get_ticks() < 100000:
+            if pg.time.get_ticks() < 5000:
                 for meteorito in self.meteoritos.sprites():
                     meteorito.update()
                     self.pantalla.blit(meteorito.image, meteorito.rect)
