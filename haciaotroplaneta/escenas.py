@@ -7,6 +7,7 @@ from .entidades import Colision, Meteorito, Nave, Planeta
 
 pg.font.init()
 pg.font.get_init()
+pg.mixer.init()
 
 class Escena:
     def __init__(self, pantalla):
@@ -79,7 +80,7 @@ class Partida(Escena):
         self.meteoritos = pg.sprite.Group()
         self.crear_meteoritos()
         self.colision = Colision()
-        self.planeta = Planeta((ANCHO, ALTO/4))
+        self.planeta = Planeta((ANCHO, ALTO))
 
         
     def bucle_principal(self):
@@ -109,11 +110,15 @@ class Partida(Escena):
                 self.jugador, self.meteoritos, True)
 
             if len(golpeados) > 0 or show_colision == True:
+                if show_time == 20:
+                    self.colision.reproducir()
+                
                 show_colision = True
                 show_time = show_time - 1
                 self.pantalla.blit(self.colision.image, self.jugador.rect)
+                
 
-            self.pantalla.blit(self.planeta.image, self.planeta.rect)
+            #self.pantalla.blit(self.planeta.image, self.planeta.rect)
             
             if show_time == 0:
                 num_colisiones = num_colisiones + 1
@@ -135,8 +140,6 @@ class Partida(Escena):
                 for meteorito in self.meteoritos.sprites():
                     meteorito.update()
                     self.pantalla.blit(meteorito.image, meteorito.rect)
-            
-            #borrar? self.tiempo = self.tiempo * 10
 
             if num_colisiones > 5:
                 num_colisiones = 0

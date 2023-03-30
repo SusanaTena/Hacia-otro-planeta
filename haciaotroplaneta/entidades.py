@@ -67,6 +67,10 @@ class Colision(Sprite):
         super().__init__()
         self.image = pg.image.load(
             os.path.join("resources", "images", "explosion.png"))
+        self.sonido_colision = pg.mixer.Sound(os.path.join("resources", "sounds", "impacto.mp3"))
+    
+    def reproducir(self):
+      pg.mixer.Sound.play(self.sonido_colision)
         
 
 class Planeta:
