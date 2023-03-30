@@ -88,12 +88,11 @@ class Partida(Escena):
         show_time = 20
         show_colision = False
         num_colisiones = 0
-
-        font1 = pg.font.SysFont('freesanbold.ttf', 50)
+        num_vidas = 3
+        fuente = pg.font.SysFont('freesanbold.ttf', 50)
         
         while not salir:
             self.reloj.tick(FPS)
-
 
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -125,12 +124,12 @@ class Partida(Escena):
             # todos los que pasen de la y suman 10 pts
             # vidas = 5
             # 
-            text1 = font1.render(
+            textoColisiones = fuente.render(
                     "Colisiones: " + str(num_colisiones), True, (0, 50, 0))
-            textRect1 = text1.get_rect()
-            textRect1.center = (ANCHO/2, 25)
+            textoColisionesRect = textoColisiones.get_rect()
+            textoColisionesRect.center = (ANCHO/2 - 300, 25)
 
-            self.pantalla.blit(text1, textRect1)
+            self.pantalla.blit(textoColisiones, textoColisionesRect)
 
             if pg.time.get_ticks() < 100000:
                 for meteorito in self.meteoritos.sprites():
@@ -140,13 +139,17 @@ class Partida(Escena):
             #borrar? self.tiempo = self.tiempo * 10
 
             if num_colisiones > 5:
-                mensaje = "Has perdido una vida"
-                texto = font1.render(mensaje, True, (0, 0, 0))
-                pos_x = ANCHO/2 - texto.get_width()/2
-                pos_y = ALTO/4
-                self.pantalla.blit(texto, (pos_x, pos_y))
+                num_colisiones = 0
+                num_vidas = num_vidas - 1
 
-        
+            textoVidas = fuente.render(str(num_vidas) + " vida(s)", True, (0, 0, 0))
+            textoVidasRect = textoVidas.get_rect()
+            textoVidasRect.center = (ANCHO/2 + 100, 25)
+            self.pantalla.blit(textoVidas, textoVidasRect)
+
+            if num_vidas == 0:
+                salir = True
+            
             pg.display.flip()
         return False
 
