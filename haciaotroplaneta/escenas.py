@@ -68,8 +68,6 @@ class Portada(Escena):
         pos_y = ALTO/4
         self.pantalla.blit(texto, (pos_x, pos_y))
 
-
-
 class Partida(Escena):
     def __init__(self, pantalla):
         super().__init__(pantalla)
@@ -138,8 +136,17 @@ class Partida(Escena):
                 for meteorito in self.meteoritos.sprites():
                     meteorito.update()
                     self.pantalla.blit(meteorito.image, meteorito.rect)
-            self.tiempo = self.tiempo * 10
             
+            #borrar? self.tiempo = self.tiempo * 10
+
+            if num_colisiones > 5:
+                mensaje = "Has perdido una vida"
+                texto = font1.render(mensaje, True, (0, 0, 0))
+                pos_x = ANCHO/2 - texto.get_width()/2
+                pos_y = ALTO/4
+                self.pantalla.blit(texto, (pos_x, pos_y))
+
+        
             pg.display.flip()
         return False
 
