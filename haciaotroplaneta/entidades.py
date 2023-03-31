@@ -1,8 +1,8 @@
 import os
 import pygame as pg
-from pygame.sprite import Sprite
 from haciaotroplaneta import ALTO, ANCHO, FPS
-
+from pygame.sprite import Sprite
+from random import *
 
 
 class Nave(Sprite):
@@ -42,17 +42,39 @@ class Nave(Sprite):
             midbottom=(self.rect.x, self.rect.y))
 
 
-
 class Meteorito(Sprite):
 
-    def __init__(self, posicion, velocidad):
+    def __init__(self, posicion):
         super().__init__()
-        self.velocidad_x = velocidad
         self.image = pg.image.load(
             os.path.join("resources", "images", "meteo.png")
         )
         self.rect = self.image.get_rect(
             midbottom=posicion)
+        self.tipoImage = randint (1,3)
+        if self.tipoImage == 1:
+            self.image = pg.image.load(
+                os.path.join("resources", "images", "meteo.png")
+            )
+        elif self.tipoImage == 2:
+            self.image = pg.image.load(
+                os.path.join("resources", "images", "meteo1.png")
+            )
+        else:
+            self.image = pg.image.load(
+                os.path.join("resources", "images", "meteo2.png")
+        )
+
+        self.velocidadMet = randint (1,3)
+        if self.velocidadMet == 1:
+            self.velocidadMet = -15
+        elif self.velocidadMet == 2:
+            self.velocidadMet = -6
+        else:
+            self.velocidadMet = -8
+
+        self.velocidad_x = self.velocidadMet
+
 
     def update(self):
         # calculo de la posición de la nave en movimiento
@@ -78,10 +100,13 @@ class Planeta:
         super().__init__()
         self.image = pg.image.load(
             os.path.join("resources", "images", "mercury.png"))
-        
         self.rect = self.image.get_rect(
             midbottom=posicion)
+        self.sonido_llegada = pg.mixer.Sound(
+            os.path.join("resources", "sounds", "fin.mp3"))
 
+    def reproducir(self):
+      pg.mixer.Sound.play(self.sonido_llegada)
     
     
 
