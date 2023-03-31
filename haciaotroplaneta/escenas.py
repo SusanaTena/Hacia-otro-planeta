@@ -7,18 +7,6 @@ from .entidades import Colision, Meteorito, Nave, Planeta
 
 pg.font.init()
 pg.font.get_init()
-pg.mixer.init()
-
-VELOCIDAD_JUEGO = 20
-
-TAMAÑO_MINIMO_METEORITO = 10
-TAMAÑO_MAXIMO_METEORITO = 40
-VELOCIDAD_MINIMA_METEORITO = 1
-VELOCIDAD_MEDIA_METEORITO = 5
-VELOCIDAD_MAXIMA_METEORITO = 10
-
-#SonidoLlegadaPlaneta = pg.mixer.Sound("victory2.ogg")
-#pg.mixer.music.load("musicadefondo") 
 
 # pygame.transform.rotozoom(Surface, angle, scale): return Surface -- para rotar la nave (http://www.losersjuegos.com.ar/traducciones/pygame/transform#rotate)
 
@@ -143,7 +131,7 @@ class Partida(Escena):
 
             if num_colisiones > 5:
                 num_colisiones = 0
-                num_vidas = num_vidas - 1
+                num_vidas = num_vidas - 1 
 
             textoVidas = fuente.render(str(num_vidas) + " vida(s)", True, (255, 200, 0))
             textoVidasRect = textoVidas.get_rect()
