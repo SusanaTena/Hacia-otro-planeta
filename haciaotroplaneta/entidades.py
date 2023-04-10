@@ -34,12 +34,19 @@ class Nave(Sprite):
 
     def aterrizar(self):
 
-        self.rect.x = ANCHO - 180
-        self.rect.y = ALTO/1.75
-        self.image = pg.image.load(os.path.join(
-            "resources", "images", "nave-rotada.png"))
-        self.rect = self.image.get_rect(
-            midbottom=(self.rect.x, self.rect.y))
+        if self.rect.x >= ANCHO - 210:
+            self.rect.y = ALTO / 1.75
+            self.rect.x = ANCHO - 180
+            self.image = pg.image.load(os.path.join(   
+                "resources", "images", "nave-rotada.png"))
+            self.rect = self.image.get_rect(
+                midbottom=(self.rect.x, self.rect.y))
+            
+        else:
+            self.rect.x += 5
+            self.rect.y = ALTO/2
+
+    
 
 
 class Meteorito(Sprite):

@@ -145,8 +145,9 @@ class Partida(Escena):
 
             pg.time.get_ticks()
 
-            self.jugador.update()
-            self.pantalla.blit(self.jugador.image, self.jugador.rect)
+            if pg.time.get_ticks() <= self.tiempo_partida:
+                self.jugador.update()
+                self.pantalla.blit(self.jugador.image, self.jugador.rect)
 
             golpeados = pg.sprite.spritecollide(
                 self.jugador, self.meteoritos, True)
