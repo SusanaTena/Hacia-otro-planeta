@@ -60,10 +60,57 @@ class Portada(Escena):
         self.pantalla.blit(self.logo, (pos_x, pos_y))
 
     def pintar_texto(self):
-        mensaje = "Pulsa Enter para comenzar la partida"
+        mensaje = "Pulsa Enter."
         texto = self.tipografia.render(mensaje, True, (0, 0, 0))
         pos_x = ANCHO/2 - texto.get_width()/2
         pos_y = ALTO/4
+        self.pantalla.blit(texto, (pos_x, pos_y))
+
+
+class Instrucciones(Escena):
+    def __init__(self, pantalla):
+        super().__init__(pantalla)
+        ruta_fuente = os.path.join(
+            "resources", "fonts", "CabinSketch-Bold.ttf")
+        self.tipografia = pg.font.Font(ruta_fuente, 35)
+
+    def bucle_principal(self):
+        super().bucle_principal()
+        salir = False
+        while not salir:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    return True
+                if event.type == pg.KEYDOWN and event.key == pg.K_KP_ENTER:
+                    salir = True
+            self.pantalla.fill((25, 80, 99))
+            self.pintar_texto()
+            pg.display.flip()
+        return False
+
+    def pintar_texto(self):
+        mensaje = "¡Esquiva para llegar al planeta!"
+        texto = self.tipografia.render(mensaje, True, (0, 0, 0))
+        pos_x = ANCHO/2 - texto.get_width()/2
+        pos_y = ALTO/4
+        self.pantalla.blit(texto, (pos_x, pos_y))
+
+        mensaje = "Pulsa flecha arriba o abajo para moverte."
+        texto = self.tipografia.render(mensaje, True, (0, 0, 0))
+        pos_x = ANCHO/2 - texto.get_width()/2
+        pos_y = ALTO/4+70
+        self.pantalla.blit(texto, (pos_x, pos_y))
+
+        mensaje = "Tienes tres vidas, y perderás una por cada 5 impactos."
+        texto = self.tipografia.render(mensaje, True, (0, 0, 0))
+        pos_x = ANCHO/2 - texto.get_width()/2
+        pos_y = ALTO/4+140
+        self.pantalla.blit(texto, (pos_x, pos_y))
+
+        mensaje = "Pulsa Enter para comenzar."
+        texto = self.tipografia.render(mensaje, True, (0, 0, 0))
+        pos_x = ANCHO/2 - texto.get_width()/2
+        pos_y = ALTO/4+210
         self.pantalla.blit(texto, (pos_x, pos_y))
 
 class Partida(Escena):
