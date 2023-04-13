@@ -101,7 +101,7 @@ class Instrucciones(Escena):
         pos_y = ALTO/4+70
         self.pantalla.blit(texto, (pos_x, pos_y))
 
-        mensaje = "Tienes tres vidas, y perderás una por cada 5 impactos."
+        mensaje = "Tienes tres vidas, y perderás una por cada 3 impactos."
         texto = self.tipografia.render(mensaje, True, (0, 0, 0))
         pos_x = ANCHO/2 - texto.get_width()/2
         pos_y = ALTO/4+140
@@ -177,7 +177,7 @@ class Partida(Escena):
                     meteorito.update()
                     self.pantalla.blit(meteorito.image, meteorito.rect)
 
-            if num_colisiones > 5:
+            if num_colisiones > 1:
                 num_colisiones = 0
                 num_vidas = num_vidas - 1 
 
@@ -187,7 +187,14 @@ class Partida(Escena):
             self.pantalla.blit(textoVidas, textoVidasRect)
 
             if num_vidas == 0:
-                salir = True
+                self.pantalla.blit(self.planeta.image, self.planeta.rect)
+                textoFin = fuente.render(
+                    "GAME OVER", True, (255, 255, 255))
+                textoFinRect = textoFin.get_rect()
+                textoFinRect.center = (ANCHO/2, ALTO/2)
+                self.pantalla.blit(textoFin, textoFinRect)
+                salir = False         
+
 
             if pg.time.get_ticks() > self.tiempo_partida:
                 self.pantalla.blit(self.planeta.image, self.planeta.rect)
@@ -204,6 +211,7 @@ class Partida(Escena):
                 self.pantalla.blit(self.jugador.image, self.jugador.rect)
 
             pg.display.flip()
+
         return False
 
     def pintar_fondo(self):
@@ -220,6 +228,38 @@ class Partida(Escena):
             meteorito = Meteorito(
                 (ANCHO + randint(0, 100000), randint(1, ALTO)))
             self.meteoritos.add(meteorito)
+
+
+class Fin(Escena):
+    def __init__(self, pantalla):
+        super().__init__(pantalla)
+        ruta_fuente = os.path.join(
+            "resources", "fonts", "CabinSketch-Bold.ttf")
+        self.tipografia = pg.font.Font(ruta_fuente, 35)
+
+    def bucle_principal(self):
+        super().bucle_principal()
+        salir = False
+        while not salir:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    return True
+                if event.type == pg.KEYDOWN and event.key == pg.K_KP_ENTER:
+                    salir = True
+            self.pantalla.fill((25, 80, 99))
+            self.pintar_texto()
+            pg.display.flip()
+        return False
+    def pintar_texto(self):
+        mensaje = "GAME OVER"
+        texto = self.tipografia.render(mensaje, True, (0, 0, 0))
+        pos_x = ANCHO/2 - texto.get_width()/2
+        pos_y = ALTO/4
+        self.pantalla.blit(texto, (pos_x, pos_y))
+
+        
+
+
 
 
 

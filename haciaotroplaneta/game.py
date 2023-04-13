@@ -1,6 +1,6 @@
 import pygame as pg
 from . import ALTO, ANCHO
-from .escenas import Portada, Partida, Instrucciones
+from .escenas import Portada, Partida, Instrucciones, Fin
 from .entidades import Nave
 
 
