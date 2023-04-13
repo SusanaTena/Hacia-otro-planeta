@@ -13,7 +13,8 @@ class HaciaOtroPlaneta:
         self.escenas = [
             Portada(self.pantalla),
             Instrucciones(self.pantalla),
-            Partida(self.pantalla)
+            Partida(self.pantalla),
+            Fin(self.pantalla)
         ]
 
     def comienzo(self):

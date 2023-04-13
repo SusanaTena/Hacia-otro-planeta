@@ -187,13 +187,7 @@ class Partida(Escena):
             self.pantalla.blit(textoVidas, textoVidasRect)
 
             if num_vidas == 0:
-                self.pantalla.blit(self.planeta.image, self.planeta.rect)
-                textoFin = fuente.render(
-                    "GAME OVER", True, (255, 255, 255))
-                textoFinRect = textoFin.get_rect()
-                textoFinRect.center = (ANCHO/2, ALTO/2)
-                self.pantalla.blit(textoFin, textoFinRect)
-                salir = False         
+                salir = True       
 
 
             if pg.time.get_ticks() > self.tiempo_partida:
@@ -235,7 +229,7 @@ class Fin(Escena):
         super().__init__(pantalla)
         ruta_fuente = os.path.join(
             "resources", "fonts", "CabinSketch-Bold.ttf")
-        self.tipografia = pg.font.Font(ruta_fuente, 35)
+        self.tipografia = pg.font.Font(ruta_fuente, 150)
 
     def bucle_principal(self):
         super().bucle_principal()
