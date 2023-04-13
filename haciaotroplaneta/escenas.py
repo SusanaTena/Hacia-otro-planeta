@@ -246,7 +246,7 @@ class Fin(Escena):
         return False
     def pintar_texto(self):
         mensaje = "GAME OVER"
-        texto = self.tipografia.render(mensaje, True, (0, 0, 0))
+        texto = self.tipografia.render(mensaje, True, (50, 10, 120))
         pos_x = ANCHO/2 - texto.get_width()/2
         pos_y = ALTO/4
         self.pantalla.blit(texto, (pos_x, pos_y))
