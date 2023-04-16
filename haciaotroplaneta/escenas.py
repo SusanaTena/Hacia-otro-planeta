@@ -8,8 +8,6 @@ from .entidades import Colision, Meteorito, Nave, Planeta
 pg.font.init()
 pg.font.get_init()
 
-# pygame.transform.rotozoom(Surface, angle, scale): return Surface -- para rotar la nave (http://www.losersjuegos.com.ar/traducciones/pygame/transform#rotate)
-
 class Escena:
     def __init__(self, pantalla):
         self.pantalla = pantalla
@@ -27,7 +25,6 @@ class Marcador:
     texto_uno = pg.font.SysFont("comic", 32)
     texto_dos = pg.font.SysFont("arial black", 50)
 
-    #texto = texto_uno.render("SCORE = ")
 
 class Portada(Escena):
     def __init__(self, pantalla):

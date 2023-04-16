@@ -46,9 +46,6 @@ class Nave(Sprite):
             self.rect.x += 5
             self.rect.y = ALTO/2
 
-    
-
-
 class Meteorito(Sprite):
 
     def __init__(self, posicion):
